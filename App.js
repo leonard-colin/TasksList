@@ -10,14 +10,14 @@ import React from 'react';
 import {
   Text,
   StyleSheet,
-  
 } from 'react-native';
+import TasksScreen from './src/screens/Tasks';
 
 
 const App = ({children, title}) => {
 
   return (
-    <Text>Hello World!</Text>
+    <TasksScreen />
   )
 };
 
