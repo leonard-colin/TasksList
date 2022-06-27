@@ -10,6 +10,7 @@ import React from 'react';
 import {
   Text,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 import TasksScreen from './src/screens/Tasks';
 
@@ -17,7 +18,10 @@ import TasksScreen from './src/screens/Tasks';
 const App = ({children, title}) => {
 
   return (
-    <TasksScreen />
+    <SafeAreaView style={{flex:1}}>
+      <TasksScreen />
+    </SafeAreaView>
+    
   )
 };
 
