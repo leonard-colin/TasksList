@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
@@ -8,10 +8,21 @@ const months = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet"
 export default function Header() {
     const date = new Date()
   return (
-    <>
-    <Text>{`${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]}`}</Text>
-    </>
+    <View style={styles.container}>
+      <Text style={styles.date}>{`${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]}`}</Text>
+    </View>
     
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingLeft: 25,
+    paddingTop: 20,
+  },
+  date: {
+    fontSize: 26,
+    fontWeight: "bold"
+  }
+})
  
