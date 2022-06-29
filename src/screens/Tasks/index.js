@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import { FlatList, View, StyleSheet } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { deleteTask, getTasks, toggleTask } from '../../redux/store'
 import Header from '../../components/Header'
 import TaskForm from './TaskForm'
 import TaskTile from './TaskTile'
@@ -11,53 +13,34 @@ export default function TasksScreen() {
   const [isFormVisible, setIsFormVisible] = useState(false)
   // Liste de tâches
   // State pour garder en mémoire les tâches.
-  const [tasks, setTasks] = useState([])
+  // const [tasks, setTasks] = useState([])
+
+  const tasks = useSelector(getTasks)
+  const dispatch = useDispatch()
 
   // item = {title: "Hello world!", isCompleted: false}
   const renderItem = ({item}) => {
     return <TaskTile task={item} onUpdateTask={onUpdateTask} onDeleteTask={onDeleteTask} />
   }
+
   // TIPS: asyncStorage si on veut garder l'état dans la mémoire du téléphone
 
-  // Ajouter une fonction pour ajouter une tâche au state
-  // Passer cette fonction à notre formulaire
-  const onAddTask = (title) => {
-    setTasks([...tasks, {
-      id: Date.now(),
-      title,
-      isCompleted: false
-    }])
-  }
+  // // Ajouter une fonction pour ajouter une tâche au state
+  // // Passer cette fonction à notre formulaire
+  // const onAddTask = (title) => {
+  //   setTasks([...tasks, {
+  //     id: Date.now(),
+  //     title,
+  //     isCompleted: false
+  //   }])
+  // }
 
   const onUpdateTask = (id) => {
-    let newTasks = []
-
-    tasks.forEach(t => {
-      if (t.id !== id) {
-        newTasks.push(t)
-        return
-      }
-
-      newTasks.push({
-        id,
-        title: t.title,
-        isCompleted: !t.isCompleted
-      })
-    })
-
-    setTasks(newTasks)
+    dispatch(toggleTask(id))
   }
 
   const onDeleteTask = (id) => {
-    let newTasks = []
-
-    tasks.forEach(t => {
-      if (t.id !== id) {
-        newTasks.push(t)
-      } 
-    })
-
-    setTasks(newTasks)
+    dispatch(deleteTask(id))
   }
 
   const _toggleForm = () => {
@@ -75,10 +58,10 @@ export default function TasksScreen() {
         ListHeaderComponent={
           <>
           <Header />
-          {isFormVisible && <TaskForm onAddTask={onAddTask} />}
+          {isFormVisible && <TaskForm />}
           <View style={styles.container}>
             <Counter nb={tasks.length} title="Tâches crées"/>
-            <Counter nb={tasks.filter(t => t.isCompleted === true).length } title="Tâches effectuées"/>
+            <Counter nb={tasks.filter(t => t.isCompleted === true).length } title="Tâches complétées"/>
           </View>  
           </>
       }
