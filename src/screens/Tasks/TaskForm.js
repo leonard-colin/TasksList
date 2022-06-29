@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { TextInput, StyleSheet, Button, View} from 'react-native'
 import { useDispatch } from 'react-redux'
 
-import { addTask } from '../../redux/store'
+import { addTask } from '../../redux/actions'
 
 export default function TaskForm() {
   const [newTitle, setNewTitle] = useState("")
